@@ -5,9 +5,12 @@
   padding:0;
   font-family: 'Roboto', sans-serif;
 }
+body{
+  background-color: antiquewhite;
+}
 
 .card{
-  margin-top: 300px;
+  margin-top: 200px;
   background-color: #212529;
   color:#fff
 }
@@ -17,4 +20,16 @@
   width:400px;
   height: 400px;
 }
+
+.simple-card{
+  height: 600px ;
+}
+.simple-card-content{
+  height:150px
+}
+
+#works{
+  margin-top: 300px;
+}
+
 
