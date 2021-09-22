@@ -3,6 +3,7 @@ import Hakkımda from "./components/Hakkımda";
 import Navbar from "./components/Navbar";
 import Çalışmalarım from "./components/Çalışmalarım";
 import Yorumlar from "./components/Yorumlar";
+import İletişim from "./components/İletişim"
 import InitialState from "./components/InitialState";
 const App = () => {
   const [yorumlar, setYorumlar] = useState(InitialState);
@@ -26,6 +27,7 @@ const App = () => {
       <Hakkımda />
       <Çalışmalarım />
       <Yorumlar yorumlar={yorumlar} yorumSil={yorumSil} yorumEkle={yorumEkle}/>
+      <İletişim/>
     </div>
   );
 };
