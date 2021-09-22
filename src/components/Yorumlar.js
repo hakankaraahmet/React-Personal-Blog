@@ -1,141 +1,96 @@
 import React, { useState } from "react";
+import Yorum from "./Yorum";
+const Yorumlar = ({ yorumlar, yorumSil, yorumEkle }) => {
+  const [mesaj, setMesaj] = useState("");
+  const [isim, setİsim] = useState("");
+  const [email, setEmail] = useState("");
 
-const Comment = () => {
-  const [text, setText] = useState({ message: "", name: "", email: "" });
-  const [comments, setComments] = useState([]);
-  const onButtonClick = (e) => {
-    e.preventDefault();
-    if (text.message && text.name && text.email) {
-      setComments([...comments, text]);
-      setText({ message: "", name: "", email: "" });
+  const mesajDeğiştirmeButonu = (e) => {
+    setMesaj(e.target.value);
+  };
+
+  const isimDeğiştirmeButonu = (e) => {
+    setİsim(e.target.value);
+  };
+  const emailDeğiştirmeButonu = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    if (!mesaj || !isim || !email) {
+      e.preventDefault();
+      alert("lütfen boşlukları doldurunuz");
     } else {
-      alert("Lütfen tüm alanları doldurunuz");
+      e.preventDefault();
+      yorumEkle({ mesaj, isim, email });
+      setMesaj("");
+      setİsim("");
+      setEmail("");
     }
   };
-  const deleteComment = (e) => {
-    return setComments(
-      comments.filter((comment, index) => {
-        console.log(index);
-        console.log(e.target.id);
-        return index !== Number(e.target.id);
-      })
-    );
-  };
-  const allComments =
-    comments.length > 0 &&
-    comments.map((comment, index) => {
-      return (
-        <div key={index} id="comments">
-          <div className=" align-items-center">
-            <div className="p-3 col-10 bg-light text-dark comment mt-4 text-justify float-left">
-              <h4>
-                <i className="fa fa-user text-secondary"></i> {comment.name}
-                <br />
-                <br />
-                {"    "}
-                <i className="fa fa-envelope text-secondary"></i>
-                {"    "}
-                {comment.email}
-              </h4>
-              <br />
-              <p>{comment.message}</p>
-              <button
-                type="button"
-                className="btn btn-danger fw-bold"
-                onClick={deleteComment}
-              >
-                <i id={index} title="Delete" className="fa fa-trash-alt"></i>
-                <span>Yorumu Sil</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    });
+
   return (
-    <div
-      id="comments"
-      className="d-flex justify-content-between p-5 row bg-dark text-light"
-    >
-      <div className="col-md-6">
-        <section className="">
-          <form id="algin-form">
-            <div className="form-group">
-              <h4>Yorumlarınızı yazabilirsiniz...</h4>{" "}
-              <label htmlFor="message">Mesaj: </label>{" "}
-              <textarea
-              placeholder="Yorumunuzu giriniz..."
-                onChange={(e) =>
-                  setText({
-                    message: e.target.value,
-                    name: text.name,
-                    email: text.email,
-                  })
-                }
-                value={text.message}
-                name="message"
-                id=""
-                cols="30"
-                rows="5"
-                className="form-control bg-white"
-              ></textarea>
-            </div>
-            <div className="form-group">
-              {" "}
-              <label htmlFor="name">İsim: </label>{" "}
-              <input
-              placeholder="Adınızı giriniz..."
-                onChange={(e) =>
-                  setText({
-                    name: e.target.value,
-                    message: text.message,
-                    email: text.email,
-                  })
-                }
-                value={text.name}
-                type="text"
-                name="name"
-                id="fullname"
-                className="form-control"
-              />{" "}
-            </div>
-            <div className="form-group">
-              {" "}
-              <label htmlFor="email">Email Adresi: </label>{" "}
-              <input
-              placeholder="E-mail adresinizi giriniz..."
-                onChange={(e) =>
-                  setText({
-                    email: e.target.value,
-                    message: text.message,
-                    name: text.name,
-                  })
-                }
-                value={text.email}
-                type="text"
-                name="email"
-                id="email"
-                className="form-control"
-              />{" "}
-            </div>
-            <div className="form-inline mt-2">
-              {" "}
-              <button
-                onClick={(e) => {
-                  onButtonClick(e);
-                }}
-                type="button"
-                className="btn btn-light fw-bold bg-success text-light "
-              >
-                Gönder
-              </button>
-            </div>
-          </form>
-        </section>
+    <div className="w-75 m-auto mt-5 mb-5 yorumlar" id="comments">
+      <h1 className="text-light text-center mb-5">YORUMLAR</h1>
+      <form onSubmit={handleSubmit}>
+        <div class="form-group">
+          <label htmlFor="mesaj" className="font-weight-bolder text-light h3">
+            Lütfen bir yorum giriniz:
+          </label>
+          <textarea
+            id="mesaj"
+            onChange={mesajDeğiştirmeButonu}
+            type="text"
+            className="form-control"
+            value={mesaj}
+            placeholder="Yorumunuz..."
+          />
+          <label
+            htmlFor="isim"
+            className="font-weight-bolder text-light h3 mt-5"
+          >
+            Lütfen isminizi giriniz:
+          </label>
+          <input
+            id="isim"
+            onChange={isimDeğiştirmeButonu}
+            type="text"
+            value={isim}
+            className="form-control "
+            placeholder="İsminiz..."
+          />
+
+          <label
+            htmlFor="email"
+            className="font-weight-bolder text-light h3 mt-5"
+          >
+            Lütfen e-mailinizi giriniz:
+          </label>
+          <input
+            id="email"
+            onChange={emailDeğiştirmeButonu}
+            type="email"
+            value={email}
+            className="form-control "
+            placeholder="E-mail..."
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn btn-success btn-lg font-weight-bolder mt-5 "
+          >
+            Yorum Ekle
+          </button>
+        </div>
+      </form>
+      <div>
+        {yorumlar.map((yorum) => {
+          return <Yorum key={yorum.id} yorum={yorum} yorumSil={yorumSil} />;
+        })}
       </div>
-      <div className="col-md-4">{allComments}</div>
     </div>
   );
 };
 
-export default Comment;
+export default Yorumlar;
